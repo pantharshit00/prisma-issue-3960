@@ -1,0 +1,21 @@
+type Account @pgTable(name: "account") {
+  companies: [Company!]!
+  email: String! @unique
+  id: Int! @id @unique
+  stores: [Store!]!
+  username: String! @unique
+}
+
+type Company @pgTable(name: "company") {
+  id: Int! @id @unique
+  name: String
+  stores: [Store!]!
+  user: Account @pgRelation(column: "userId")
+}
+
+type Store @pgTable(name: "store") {
+  company: Company @pgRelation(column: "companyId")
+  id: Int! @id @unique
+  storeId: String!
+  user: Account @pgRelation(column: "userId")
+}
